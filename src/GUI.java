@@ -1,51 +1,69 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
-    private final JPanel sendingPanel;
-    private final JPanel receivingPanel;
-    private final JPanel networkPanel;
+    private JPanel sendingPanel;
+    private JButton addSendingDeviceButton;
+    private int deviceCounter = 1;
 
     public GUI() {
-        setTitle("SMS Application");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        this.setTitle("SMS Application");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
 
-        sendingPanel = new JPanel();
-        receivingPanel = new JPanel();
-        networkPanel = new JPanel();
-
-        networkPanel.setLayout(new BoxLayout(networkPanel, BoxLayout.X_AXIS));
+        this.sendingPanel = new JPanel();
+        this.sendingPanel.setLayout(new BoxLayout(sendingPanel, BoxLayout.Y_AXIS));
 
         JScrollPane sendingScrollPane = new JScrollPane(sendingPanel);
         sendingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        JScrollPane receivingScrollPane = new JScrollPane(receivingPanel);
-        receivingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.addSendingDeviceButton = new JButton("Add");
+        this.addSendingDeviceButton.addActionListener(e -> showAddDeviceDialog());
 
-        networkPanel.add(sendingScrollPane);
-        networkPanel.add(receivingScrollPane);
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BorderLayout());
+        leftPanel.add(sendingScrollPane, BorderLayout.CENTER);
+        leftPanel.add(addSendingDeviceButton, BorderLayout.SOUTH);
 
-        JButton addBSCButton = new JButton("Add BSC Layer");
-        addBSCButton.addActionListener(e -> addBSCStation());
-
-        networkPanel.add(addBSCButton);
-
-        add(networkPanel, BorderLayout.CENTER);
+        add(leftPanel, BorderLayout.WEST);
 
         setSize(800, 600);
         setVisible(true);
     }
 
-    private void addBSCStation() {
-        // Code to add a new BSC station
+    private void showAddDeviceDialog() {
+        String message = JOptionPane.showInputDialog(this, "Enter a short text message:");
+
+        if (message != null && !message.isEmpty()) {
+            createSendingDevice(message);
+        }
     }
 
-    private void addSendingDevice() {
-        // Code to add a new sending device
+    private void createSendingDevice(String message) {
+        JPanel devicePanel = new JPanel();
+        devicePanel.setLayout(new FlowLayout());
+
+        JLabel deviceNumberLabel = new JLabel("Device " + deviceCounter);
+        JSlider frequencySlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 5);
+        JButton terminateButton = new JButton("Terminate");
+        JTextField deviceNumberField = new JTextField("Device " + deviceCounter);
+        deviceNumberField.setEditable(false);
+        JComboBox<String> stateComboBox = new JComboBox<>(new String[]{"WAITING", "ACTIVE"});
+
+        devicePanel.add(deviceNumberLabel);
+        devicePanel.add(frequencySlider);
+        devicePanel.add(terminateButton);
+        devicePanel.add(deviceNumberField);
+        devicePanel.add(stateComboBox);
+
+        sendingPanel.add(devicePanel);
+        sendingPanel.revalidate(); // Refresh the panel to reflect the changes
+
+        deviceCounter++;
     }
 
-    private void addReceivingDevice() {
-        // Code to add a new receiving device
-    }
+    // Rest of the code...
+
 }
