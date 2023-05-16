@@ -1,17 +1,17 @@
 import javax.swing.*;
 import java.awt.*;
-
 public class GUI extends JFrame {
     private final JPanel sendingPanel;
+    private final JPanel receivingPanel;
     private int deviceCounter = 1;
 
     public GUI() {
-        this.setTitle("SMS Application");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout());
+        setTitle("SMS Application");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
 
-        this.sendingPanel = new JPanel();
-        this.sendingPanel.setLayout(new BoxLayout(sendingPanel, BoxLayout.Y_AXIS));
+        sendingPanel = new JPanel();
+        sendingPanel.setLayout(new BorderLayout());
 
         JScrollPane sendingScrollPane = new JScrollPane(sendingPanel);
         sendingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -24,10 +24,26 @@ public class GUI extends JFrame {
         leftPanel.add(sendingScrollPane, BorderLayout.CENTER);
         leftPanel.add(addSendingDeviceButton, BorderLayout.SOUTH);
 
+        receivingPanel = new JPanel();
+        receivingPanel.setLayout(new BorderLayout());
+
+        JScrollPane receivingScrollPane = new JScrollPane(receivingPanel);
+        receivingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+//        JButton addReceivingDeviceButton = new JButton("Add");
+
+
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BorderLayout());
+        rightPanel.add(receivingScrollPane, BorderLayout.CENTER);
+
+
+
+        this.add(rightPanel, BorderLayout.EAST);
         this.add(leftPanel, BorderLayout.WEST);
 
         setSize(800, 600);
-        setVisible(true);
+        this.setVisible(true);
     }
 
     private void showAddDeviceDialog() {
@@ -41,7 +57,6 @@ public class GUI extends JFrame {
     private void createSendingDevice(String message) {
         JPanel devicePanel = new JPanel();
         devicePanel.setLayout(new FlowLayout());
-
         JTextField messageLabel = new JTextField(message);
         messageLabel.setEditable(false);
         JLabel deviceNumberLabel = new JLabel("Device " + deviceCounter);
@@ -51,15 +66,26 @@ public class GUI extends JFrame {
         deviceNumberField.setEditable(false);
         JComboBox<String> stateComboBox = new JComboBox<>(new String[]{"WAITING", "ACTIVE"});
 
+        // Add action listener to the stateComboBox
+        stateComboBox.addActionListener(e -> {
+            String selectedState = (String) stateComboBox.getSelectedItem();
+            if (selectedState.equals("ACTIVE")) {
+                // Start or resume the thread
+                // Implement the logic to handle the thread's behavior
+            } else if (selectedState.equals("WAITING")) {
+                // Suspend or pause the thread
+                // Implement the logic to handle the thread's behavior
+            }
+        });
+
         devicePanel.add(deviceNumberLabel);
         devicePanel.add(frequencySlider);
         devicePanel.add(terminateButton);
         devicePanel.add(deviceNumberField);
         devicePanel.add(stateComboBox);
-        devicePanel.add(messageLabel);
 
         sendingPanel.add(devicePanel);
-        sendingPanel.revalidate(); // Refresh the panel to reflect the changes
+        sendingPanel.revalidate();
 
         deviceCounter++;
     }
