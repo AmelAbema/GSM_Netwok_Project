@@ -1,9 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+
 public class GUI extends JFrame {
     private final JPanel sendingPanel;
-    private final JPanel receivingPanel;
     private int deviceCounter = 1;
+    private final JPanel receivingDevicesPanel;
 
     public GUI() {
         setTitle("SMS Application");
@@ -24,26 +25,31 @@ public class GUI extends JFrame {
         leftPanel.add(sendingScrollPane, BorderLayout.CENTER);
         leftPanel.add(addSendingDeviceButton, BorderLayout.SOUTH);
 
-        receivingPanel = new JPanel();
+
+        JPanel receivingPanel = new JPanel();
         receivingPanel.setLayout(new BorderLayout());
 
         JScrollPane receivingScrollPane = new JScrollPane(receivingPanel);
         receivingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-//        JButton addReceivingDeviceButton = new JButton("Add");
+        receivingDevicesPanel = new JPanel();
+        receivingDevicesPanel.setLayout(new BoxLayout(receivingDevicesPanel, BoxLayout.Y_AXIS));
+        receivingScrollPane.setViewportView(receivingDevicesPanel);
 
+        JButton addReceivingDeviceButton = new JButton("Add");
+        addReceivingDeviceButton.addActionListener(e -> createReceivingDevice());
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
         rightPanel.add(receivingScrollPane, BorderLayout.CENTER);
+        rightPanel.add(addReceivingDeviceButton, BorderLayout.SOUTH);
 
-
-
-        this.add(rightPanel, BorderLayout.EAST);
-        this.add(leftPanel, BorderLayout.WEST);
+        add(rightPanel, BorderLayout.EAST);
+        add(leftPanel, BorderLayout.WEST);
 
         setSize(800, 600);
-        this.setVisible(true);
+        setVisible(true);
+
     }
 
     private void showAddDeviceDialog() {
@@ -90,6 +96,21 @@ public class GUI extends JFrame {
         deviceCounter++;
     }
 
+    private void createReceivingDevice() {
+        JPanel devicePanel = new JPanel();
+        devicePanel.setLayout(new FlowLayout());
+
+        JButton terminateButton = new JButton("Terminate");
+        JLabel receivedMessagesLabel = new JLabel("Received Messages: 0");
+        JCheckBox autoClearCheckBox = new JCheckBox("Auto Clear every 10 seconds");
+
+        devicePanel.add(terminateButton);
+        devicePanel.add(receivedMessagesLabel);
+        devicePanel.add(autoClearCheckBox);
+
+        receivingDevicesPanel.add(devicePanel);
+        receivingDevicesPanel.revalidate();
+    }
     // Rest of the code...
 
 }
