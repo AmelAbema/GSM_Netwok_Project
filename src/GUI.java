@@ -1,11 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
-    private JPanel sendingPanel;
-    private JButton addSendingDeviceButton;
+    private final JPanel sendingPanel;
     private int deviceCounter = 1;
 
     public GUI() {
@@ -19,15 +16,15 @@ public class GUI extends JFrame {
         JScrollPane sendingScrollPane = new JScrollPane(sendingPanel);
         sendingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        this.addSendingDeviceButton = new JButton("Add");
-        this.addSendingDeviceButton.addActionListener(e -> showAddDeviceDialog());
+        JButton addSendingDeviceButton = new JButton("Add");
+        addSendingDeviceButton.addActionListener(e -> showAddDeviceDialog());
 
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BorderLayout());
         leftPanel.add(sendingScrollPane, BorderLayout.CENTER);
         leftPanel.add(addSendingDeviceButton, BorderLayout.SOUTH);
 
-        add(leftPanel, BorderLayout.WEST);
+        this.add(leftPanel, BorderLayout.WEST);
 
         setSize(800, 600);
         setVisible(true);
@@ -45,6 +42,8 @@ public class GUI extends JFrame {
         JPanel devicePanel = new JPanel();
         devicePanel.setLayout(new FlowLayout());
 
+        JTextField messageLabel = new JTextField(message);
+        messageLabel.setEditable(false);
         JLabel deviceNumberLabel = new JLabel("Device " + deviceCounter);
         JSlider frequencySlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 5);
         JButton terminateButton = new JButton("Terminate");
@@ -57,6 +56,7 @@ public class GUI extends JFrame {
         devicePanel.add(terminateButton);
         devicePanel.add(deviceNumberField);
         devicePanel.add(stateComboBox);
+        devicePanel.add(messageLabel);
 
         sendingPanel.add(devicePanel);
         sendingPanel.revalidate(); // Refresh the panel to reflect the changes
