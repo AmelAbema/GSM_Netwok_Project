@@ -20,6 +20,7 @@ public class GUI extends JFrame {
         JScrollPane sendingScrollPane = new JScrollPane(sendingDevicesPanel);
         sendingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+
         JButton addSendingDeviceButton = new JButton("Add");
         addSendingDeviceButton.addActionListener(e -> showAddDeviceDialog());
 
@@ -37,7 +38,6 @@ public class GUI extends JFrame {
 
         JScrollPane receivingScrollPane = new JScrollPane(receivingDevicesPanel);
         receivingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        receivingScrollPane.setViewportView(receivingDevicesPanel);
 
         JButton addReceivingDeviceButton = new JButton("Add");
         addReceivingDeviceButton.addActionListener(e -> createReceivingDevice());
@@ -56,14 +56,14 @@ public class GUI extends JFrame {
 
         JScrollPane stationsScrollPane = new JScrollPane(stationsPanel);
         stationsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        stationsScrollPane.setViewportView(stationsPanel);
+
 
 
         JButton addStationButton = new JButton("Add");
-        addReceivingDeviceButton.addActionListener(e -> createReceivingDevice());
+        addStationButton.addActionListener(e -> createStationDevice());
 
         JButton removeStationButton = new JButton("Remove BSC");
-        addReceivingDeviceButton.addActionListener(e -> createReceivingDevice());
+        addStationButton.addActionListener(e -> createStationDevice());
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(addStationButton);
@@ -93,8 +93,12 @@ public class GUI extends JFrame {
 
     }
 
+    private void createStationDevice() {
+
+    }
+
     private void showAddDeviceDialog() {
-        String message = JOptionPane.showInputDialog(this, "Enter a short text message:");
+        String message = JOptionPane.showInputDialog(this, "Enter a short text message: ");
 
         if (message != null && !message.isEmpty()) {
             createSendingDevice(message);
@@ -133,7 +137,15 @@ public class GUI extends JFrame {
             }
         });
 
+        terminateButton.addActionListener(e ->{
 
+        });
+
+        frequencySlider.addChangeListener(e -> {
+            int frequency = frequencySlider.getValue();
+            // Perform action based on the selected frequency
+            // For example, update the frequency value for the device
+        });
 
         devicePanel.add(deviceNumberField);
         devicePanel.add(frequencySlider);
