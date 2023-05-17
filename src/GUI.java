@@ -24,6 +24,8 @@ public class GUI extends JFrame {
         leftPanel.setLayout(new BorderLayout());
         leftPanel.add(sendingScrollPane, BorderLayout.CENTER);
         leftPanel.add(addSendingDeviceButton, BorderLayout.SOUTH);
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        leftPanel.setMinimumSize(new Dimension(550, 100));
 
 
         JPanel receivingPanel = new JPanel();
@@ -43,11 +45,21 @@ public class GUI extends JFrame {
         rightPanel.setLayout(new BorderLayout());
         rightPanel.add(receivingScrollPane, BorderLayout.CENTER);
         rightPanel.add(addReceivingDeviceButton, BorderLayout.SOUTH);
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        rightPanel.setMinimumSize(new Dimension(550, 100));
 
         add(rightPanel, BorderLayout.EAST);
         add(leftPanel, BorderLayout.WEST);
 
-        setSize(800, 600);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        splitPane.setDividerLocation(300);
+
+        add(splitPane);
+
+
+
+        setSize(1700, 700);
+        setMinimumSize(new Dimension(1500, 300));
         setVisible(true);
 
     }
