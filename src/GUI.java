@@ -2,9 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUI extends JFrame {
-    private final JPanel sendingPanel;
-    private int deviceCounter = 1;
+    private final JPanel sendingDevicesPanel;
     private final JPanel receivingDevicesPanel;
+
+    private final JPanel stationsPanel;
+    private int deviceCounter = 1;
 
     public GUI() {
         setTitle("SMS Application");
@@ -12,10 +14,10 @@ public class GUI extends JFrame {
         setLayout(new BorderLayout());
 
 
-        sendingPanel = new JPanel();
-        sendingPanel.setLayout(new BorderLayout());
+        sendingDevicesPanel = new JPanel();
+        sendingDevicesPanel.setLayout(new BoxLayout(sendingDevicesPanel, BoxLayout.Y_AXIS));
 
-        JScrollPane sendingScrollPane = new JScrollPane(sendingPanel);
+        JScrollPane sendingScrollPane = new JScrollPane(sendingDevicesPanel);
         sendingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         JButton addSendingDeviceButton = new JButton("Add");
@@ -30,7 +32,7 @@ public class GUI extends JFrame {
 
 
         receivingDevicesPanel = new JPanel();
-        receivingDevicesPanel.setLayout(new BorderLayout());
+        receivingDevicesPanel.setLayout(new BoxLayout(receivingDevicesPanel, BoxLayout.Y_AXIS));
 
 
         JScrollPane receivingScrollPane = new JScrollPane(receivingDevicesPanel);
@@ -47,18 +49,46 @@ public class GUI extends JFrame {
         rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         rightPanel.setMinimumSize(new Dimension(550, 100));
 
-        add(rightPanel, BorderLayout.EAST);
+
+        stationsPanel = new JPanel();
+        stationsPanel.setLayout(new BoxLayout(stationsPanel, BoxLayout.Y_AXIS));
+
+
+        JScrollPane stationsScrollPane = new JScrollPane(stationsPanel);
+        stationsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        stationsScrollPane.setViewportView(stationsPanel);
+
+
+        JButton addStationButton = new JButton("Add");
+        addReceivingDeviceButton.addActionListener(e -> createReceivingDevice());
+
+        JButton removeStationButton = new JButton("Remove BSC");
+        addReceivingDeviceButton.addActionListener(e -> createReceivingDevice());
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(addStationButton);
+        buttonPanel.add(removeStationButton);
+
+        JPanel middlePanel = new JPanel();
+        middlePanel.setLayout(new BorderLayout());
+        middlePanel.add(stationsScrollPane, BorderLayout.CENTER);
+        middlePanel.add(buttonPanel, BorderLayout.SOUTH);
+        middlePanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        middlePanel.setMinimumSize(new Dimension(200, 100));
+
         add(leftPanel, BorderLayout.WEST);
+        add(middlePanel, BorderLayout.CENTER);
+        add(rightPanel, BorderLayout.EAST);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
-        splitPane.setDividerLocation(300);
-
-        add(splitPane);
+        JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, middlePanel);
+        JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitPane1, rightPanel);
 
 
+        this.getContentPane().add(splitPane2);
 
-        setSize(1700, 700);
-        setMinimumSize(new Dimension(1500, 300));
+
+        setSize(1500, 700);
+        setMinimumSize(new Dimension(1050, 300));
         setVisible(true);
 
     }
@@ -84,13 +114,13 @@ public class GUI extends JFrame {
         frequencySlider.setMajorTickSpacing(1);
         frequencySlider.setPaintTicks(true);
         frequencySlider.setPaintLabels(true);
+
         JButton terminateButton = new JButton("Terminate");
         JTextField deviceNumberField = new JTextField("Device " + deviceCounter);
         deviceNumberField.setEditable(false);
 
         JComboBox<String> stateComboBox = new JComboBox<>(new String[]{"WAITING", "ACTIVE"});
 
-        // Add action listener to the stateComboBox
         stateComboBox.addActionListener(e -> {
             String selectedState = (String) stateComboBox.getSelectedItem();
             assert selectedState != null;
@@ -103,14 +133,16 @@ public class GUI extends JFrame {
             }
         });
 
+
+
         devicePanel.add(deviceNumberField);
         devicePanel.add(frequencySlider);
         devicePanel.add(terminateButton);
         devicePanel.add(stateComboBox);
         devicePanel.add(messageLabel);
 
-        sendingPanel.add(devicePanel);
-        sendingPanel.revalidate();
+        sendingDevicesPanel.add(devicePanel);
+        sendingDevicesPanel.revalidate();
 
         deviceCounter++;
     }
@@ -122,6 +154,20 @@ public class GUI extends JFrame {
         JButton terminateButton = new JButton("Terminate");
         JLabel receivedMessagesLabel = new JLabel("Received Messages: 0");
         JCheckBox autoClearCheckBox = new JCheckBox("Auto Clear every 10 seconds");
+
+        autoClearCheckBox.addActionListener(e ->{
+            if (autoClearCheckBox.isSelected()) {
+                // Perform action when the checkbox is selected
+                // For example, enable auto clear functionality
+            } else {
+                // Perform action when the checkbox is deselected
+                // For example, disable auto clear functionality
+            }
+        });
+
+        terminateButton.addActionListener(e -> {
+
+        });
 
         devicePanel.add(terminateButton);
         devicePanel.add(receivedMessagesLabel);
