@@ -11,6 +11,7 @@ public class GUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+
         sendingPanel = new JPanel();
         sendingPanel.setLayout(new BorderLayout());
 
@@ -28,14 +29,12 @@ public class GUI extends JFrame {
         leftPanel.setMinimumSize(new Dimension(550, 100));
 
 
-        JPanel receivingPanel = new JPanel();
-        receivingPanel.setLayout(new BorderLayout());
-
-        JScrollPane receivingScrollPane = new JScrollPane(receivingPanel);
-        receivingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-
         receivingDevicesPanel = new JPanel();
-        receivingDevicesPanel.setLayout(new BoxLayout(receivingDevicesPanel, BoxLayout.Y_AXIS));
+        receivingDevicesPanel.setLayout(new BorderLayout());
+
+
+        JScrollPane receivingScrollPane = new JScrollPane(receivingDevicesPanel);
+        receivingScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         receivingScrollPane.setViewportView(receivingDevicesPanel);
 
         JButton addReceivingDeviceButton = new JButton("Add");
@@ -75,18 +74,26 @@ public class GUI extends JFrame {
     private void createSendingDevice(String message) {
         JPanel devicePanel = new JPanel();
         devicePanel.setLayout(new FlowLayout());
+
         JTextField messageLabel = new JTextField(message);
         messageLabel.setEditable(false);
-        JLabel deviceNumberLabel = new JLabel("Device " + deviceCounter);
+
         JSlider frequencySlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 5);
+        frequencySlider.setSnapToTicks(true);
+        frequencySlider.createStandardLabels(1, 1);
+        frequencySlider.setMajorTickSpacing(1);
+        frequencySlider.setPaintTicks(true);
+        frequencySlider.setPaintLabels(true);
         JButton terminateButton = new JButton("Terminate");
         JTextField deviceNumberField = new JTextField("Device " + deviceCounter);
         deviceNumberField.setEditable(false);
+
         JComboBox<String> stateComboBox = new JComboBox<>(new String[]{"WAITING", "ACTIVE"});
 
         // Add action listener to the stateComboBox
         stateComboBox.addActionListener(e -> {
             String selectedState = (String) stateComboBox.getSelectedItem();
+            assert selectedState != null;
             if (selectedState.equals("ACTIVE")) {
                 // Start or resume the thread
                 // Implement the logic to handle the thread's behavior
@@ -96,11 +103,11 @@ public class GUI extends JFrame {
             }
         });
 
-        devicePanel.add(deviceNumberLabel);
+        devicePanel.add(deviceNumberField);
         devicePanel.add(frequencySlider);
         devicePanel.add(terminateButton);
-        devicePanel.add(deviceNumberField);
         devicePanel.add(stateComboBox);
+        devicePanel.add(messageLabel);
 
         sendingPanel.add(devicePanel);
         sendingPanel.revalidate();
