@@ -7,6 +7,7 @@ public class GUI extends JFrame {
 
     private final JPanel stationsPanel;
     private int deviceCounter = 1;
+    private int stationCounter = 1;
 
     public GUI() {
         setTitle("SMS Application");
@@ -63,7 +64,7 @@ public class GUI extends JFrame {
         addStationButton.addActionListener(e -> createStationDevice());
 
         JButton removeStationButton = new JButton("Remove BSC");
-        addStationButton.addActionListener(e -> createStationDevice());
+        addStationButton.addActionListener(e -> removeStationDevice());
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(addStationButton);
@@ -93,7 +94,29 @@ public class GUI extends JFrame {
 
     }
 
+    private void removeStationDevice() {
+
+    }
+
     private void createStationDevice() {
+        JPanel stationPanel = new JPanel();
+        stationPanel.setLayout(new FlowLayout());
+
+        JLabel numberLabel = new JLabel("Station " + stationCounter);
+
+        JButton terminateButton = new JButton("Terminate");
+
+        terminateButton.addActionListener(e ->{
+            stationPanel.getParent().remove(stationPanel);
+        });
+
+        stationPanel.add(terminateButton);
+        stationPanel.add(numberLabel);
+
+        stationsPanel.add(stationPanel);
+        stationsPanel.revalidate();
+
+        stationCounter++;
 
     }
 
@@ -138,7 +161,7 @@ public class GUI extends JFrame {
         });
 
         terminateButton.addActionListener(e ->{
-
+            devicePanel.getParent().remove(devicePanel);
         });
 
         frequencySlider.addChangeListener(e -> {
@@ -178,7 +201,7 @@ public class GUI extends JFrame {
         });
 
         terminateButton.addActionListener(e -> {
-
+            devicePanel.getParent().remove(devicePanel);
         });
 
         devicePanel.add(terminateButton);
