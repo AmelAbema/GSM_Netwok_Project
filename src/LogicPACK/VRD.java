@@ -1,9 +1,11 @@
 package LogicPACK;
 
 public class VRD implements MessageReceiver {
+    private final Station station;
     private int receivedMessageCount;
 
-    public VRD() {
+    public VRD(Station station) {
+        this.station = station;
         receivedMessageCount = 0;
     }
 
@@ -34,5 +36,14 @@ public class VRD implements MessageReceiver {
     @Override
     public void stopReceiving() {
 
+    }
+
+    @Override
+    public boolean stationIs(Station station) {
+        return false;
+    }
+
+    public Station getStation() {
+        return this.station;
     }
 }

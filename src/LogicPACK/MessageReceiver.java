@@ -5,4 +5,5 @@ public interface MessageReceiver {
     void startReceiving();
     void stopReceiving();
 
+    boolean stationIs(Station station);
 }
