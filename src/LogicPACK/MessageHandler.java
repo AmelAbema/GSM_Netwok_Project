@@ -1,6 +1,6 @@
 package LogicPACK;
 
 public interface MessageHandler {
-    void handleMessage(String message);
+    void handleMessage(Message message);
     void handleException(Exception exception);
 }

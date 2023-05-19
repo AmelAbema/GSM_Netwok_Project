@@ -1,8 +1,9 @@
 package LogicPACK;
 
 public class BSC implements MessageTransmitter, MessageReceiver,MessageHandler{
+
     @Override
-    public void handleMessage(String message) {
+    public void handleMessage(Message message) {
 
     }
 
@@ -12,7 +13,7 @@ public class BSC implements MessageTransmitter, MessageReceiver,MessageHandler{
     }
 
     @Override
-    public void receiveMessage(String message) {
+    public void receiveMessage(Message message) {
 
     }
 
@@ -27,17 +28,7 @@ public class BSC implements MessageTransmitter, MessageReceiver,MessageHandler{
     }
 
     @Override
-    public void transmitMessage(String message) {
-
-    }
-
-    @Override
-    public void startTransmission() {
-
-    }
-
-    @Override
-    public void stopTransmission() {
+    public void transmitMessage() {
 
     }
 }

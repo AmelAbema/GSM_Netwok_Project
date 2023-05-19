@@ -162,6 +162,7 @@ public class GUI extends JFrame {
 
         terminateButton.addActionListener(e ->{
             devicePanel.getParent().remove(devicePanel);
+
         });
 
         frequencySlider.addChangeListener(e -> {

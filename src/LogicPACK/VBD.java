@@ -1,40 +1,31 @@
 package LogicPACK;
 
-public class VBD implements MessageTransmitter {
-    private final String sender;
-    private final String recipient;
+import java.util.List;
+import java.util.Random;
+
+public class VBD extends Thread implements MessageTransmitter {
     private final String message;
+    private final List<MessageReceiver> receivers;
 
-    public VBD(String sender, String recipient, String message) {
-        this.sender = sender;
-        this.recipient = recipient;
+    public VBD (String message, List<MessageReceiver> receivers) {
         this.message = message;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public String getRecipient() {
-        return recipient;
-    }
-
-    public String getMessage() {
-        return message;
+        this.receivers = receivers;
     }
 
     @Override
-    public void transmitMessage(String message) {
+    public void transmitMessage() {
+        // Select a random VRD as the recipient
+        Random random = new Random();
+        int randomIndex = random.nextInt(receivers.size());
+        MessageReceiver recipient = receivers.get(randomIndex);
 
+         //Create and send the message
+        Message messageToSend = new Message(1, "recipient", message);
+        recipient.receiveMessage(messageToSend);
     }
 
     @Override
-    public void startTransmission() {
-
-    }
-
-    @Override
-    public void stopTransmission() {
-
+    public void run() {
+        transmitMessage();
     }
 }

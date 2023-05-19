@@ -1,8 +1,9 @@
 package LogicPACK;
 
 public class BTS implements MessageTransmitter, MessageReceiver{
+
     @Override
-    public void receiveMessage(String message) {
+    public void receiveMessage(Message message) {
 
     }
 
@@ -17,17 +18,7 @@ public class BTS implements MessageTransmitter, MessageReceiver{
     }
 
     @Override
-    public void transmitMessage(String message) {
-
-    }
-
-    @Override
-    public void startTransmission() {
-
-    }
-
-    @Override
-    public void stopTransmission() {
+    public void transmitMessage() {
 
     }
 }

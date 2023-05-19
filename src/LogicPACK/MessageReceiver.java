@@ -1,7 +1,8 @@
 package LogicPACK;
 
 public interface MessageReceiver {
-    void receiveMessage(String message);
+    void receiveMessage(Message message);
     void startReceiving();
     void stopReceiving();
+
 }
