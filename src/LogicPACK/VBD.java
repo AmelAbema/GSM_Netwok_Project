@@ -1,5 +1,6 @@
 package LogicPACK;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -15,11 +16,26 @@ public class VBD extends Thread implements MessageTransmitter {
         this.receivers = receivers;
     }
 
+    private MessageReceiver findRandomVRD(List<MessageReceiver> receivers) {
+        List<MessageReceiver> vrds = new ArrayList<>();
+        for (MessageReceiver receiver : receivers) {
+            if (receiver.stationIs(Station.VRD)) {
+                vrds.add(receiver);
+            }
+        }
+
+        if (vrds.isEmpty()) {
+            throw new IllegalStateException("No VRD available to receive the message.");
+        }
+
+        int randomIndex = new Random().nextInt(vrds.size());
+        return vrds.get(randomIndex);
+    }
+
     @Override
     public void transmitMessage() {
         // Select a random VRD as the recipient
-        int randomIndex = new Random().nextInt(receivers.size());
-        MessageReceiver recipient = receivers.get(randomIndex);
+        MessageReceiver recipient = findRandomVRD(receivers);
 
          //Create and send the message
         Message messageToSend = new Message(1, "recipient", message);

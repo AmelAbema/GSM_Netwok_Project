@@ -28,6 +28,11 @@ public class BSC implements MessageTransmitter, MessageReceiver,MessageHandler{
     }
 
     @Override
+    public boolean stationIs(Station station) {
+        return false;
+    }
+
+    @Override
     public void transmitMessage() {
 
     }

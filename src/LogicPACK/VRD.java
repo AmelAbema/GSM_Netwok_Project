@@ -40,7 +40,7 @@ public class VRD implements MessageReceiver {
 
     @Override
     public boolean stationIs(Station station) {
-        return false;
+        return this.getStation() == station;
     }
 
     public Station getStation() {
