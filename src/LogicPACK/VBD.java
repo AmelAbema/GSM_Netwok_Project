@@ -8,6 +8,11 @@ public class VBD extends Thread implements MessageTransmitter {
 
     private final Station station;
     private final String message;
+
+    public Station getStation() {
+        return station;
+    }
+
     private final List<MessageReceiver> receivers;
 
     public VBD (String message, List<MessageReceiver> receivers, Station station) {
@@ -37,8 +42,8 @@ public class VBD extends Thread implements MessageTransmitter {
         // Select a random VRD as the recipient
         MessageReceiver recipient = findRandomVRD(receivers);
 
-         //Create and send the message
-        Message messageToSend = new Message(1, "recipient", message);
+        // Create and send the message
+        Message messageToSend = new Message(1, recipient, message);
         recipient.receiveMessage(messageToSend);
     }
 

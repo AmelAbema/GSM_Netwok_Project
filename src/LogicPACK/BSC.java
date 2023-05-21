@@ -1,6 +1,6 @@
 package LogicPACK;
 
-public class BSC implements MessageTransmitter, MessageReceiver,MessageHandler{
+public class BSC implements MessageTransmitter, MessageReceiver, MessageHandler{
 
     @Override
     public void handleMessage(Message message) {
