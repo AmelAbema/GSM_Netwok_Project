@@ -19,7 +19,7 @@ public class BTS implements MessageTransmitter, MessageReceiver{
 
     @Override
     public boolean stationIs(Station station) {
-        return false;
+            return false;
     }
 
     @Override
