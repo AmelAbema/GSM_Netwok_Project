@@ -1,4 +1,9 @@
-package LogicPACK;
+package Threads;
+
+import LogicPACK.Message;
+import LogicPACK.MessageReceiver;
+import LogicPACK.MessageTransmitter;
+import LogicPACK.Station;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,17 +11,11 @@ import java.util.Random;
 
 public class VBD extends Thread implements MessageTransmitter {
 
-    private final Station station;
+    private final Station station = Station.VBD;
     private final String message;
-
-    public Station getStation() {
-        return station;
-    }
-
     private final List<MessageReceiver> receivers;
 
-    public VBD (String message, List<MessageReceiver> receivers, Station station) {
-        this.station = station;
+    public VBD (String message, List<MessageReceiver> receivers) {
         this.message = message;
         this.receivers = receivers;
     }
@@ -39,12 +38,11 @@ public class VBD extends Thread implements MessageTransmitter {
 
     @Override
     public void transmitMessage() {
-        // Select a random VRD as the recipient
-        MessageReceiver recipient = findRandomVRD(receivers);
-
-        // Create and send the message
-        Message messageToSend = new Message(1, recipient, message);
-        recipient.receiveMessage(messageToSend);
+        
+        MessageReceiver btsRecipient =  new BTS();
+        
+        Message messageToSend = new Message(this, findRandomVRD(receivers), message);
+        btsRecipient.receiveMessage(messageToSend);
     }
 
     @Override

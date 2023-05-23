@@ -1,6 +1,8 @@
-package LogicPACK;
+package Threads;
 
-public class BSC implements MessageTransmitter, MessageReceiver, MessageHandler{
+import LogicPACK.*;
+
+public class BSC implements MessageTransmitter, MessageReceiver, MessageHandler {
 
     @Override
     public void handleMessage(Message message) {
@@ -17,15 +19,6 @@ public class BSC implements MessageTransmitter, MessageReceiver, MessageHandler{
 
     }
 
-    @Override
-    public void startReceiving() {
-
-    }
-
-    @Override
-    public void stopReceiving() {
-
-    }
 
     @Override
     public boolean stationIs(Station station) {

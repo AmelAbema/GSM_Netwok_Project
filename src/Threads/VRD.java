@@ -1,4 +1,8 @@
-package LogicPACK;
+package Threads;
+
+import LogicPACK.Message;
+import LogicPACK.MessageReceiver;
+import LogicPACK.Station;
 
 public class VRD implements MessageReceiver {
     private final Station station;
@@ -26,16 +30,6 @@ public class VRD implements MessageReceiver {
 
     public int getReceivedMessageCount() {
         return receivedMessageCount;
-    }
-
-    @Override
-    public void startReceiving() {
-
-    }
-
-    @Override
-    public void stopReceiving() {
-
     }
 
     @Override

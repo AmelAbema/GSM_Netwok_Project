@@ -1,3 +1,3 @@
 package LogicPACK;
 
-public record Message(int sender, MessageReceiver recipient, String content){}
+public record Message(MessageTransmitter sender, MessageReceiver recipient, String content){}
