@@ -1,9 +1,12 @@
 package Views;
 
+import Controllers.VBDController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LeftPanel extends JPanel {
+    private VBDController vbdController;
     private final JPanel sendingDevicesPanel;
     private int deviceCounter = 1;
 

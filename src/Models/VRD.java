@@ -1,4 +1,4 @@
-package Controllers;
+package Models;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

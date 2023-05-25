@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame extends JFrame {
+
     public MainFrame() {
         setTitle("SMS Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,4 +27,5 @@ public class MainFrame extends JFrame {
         setMinimumSize(new Dimension(1050, 300));
         setVisible(true);
     }
+
 }
