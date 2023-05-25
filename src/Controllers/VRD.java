@@ -1,4 +1,4 @@
-package Logic;
+package Controllers;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

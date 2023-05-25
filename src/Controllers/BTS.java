@@ -1,6 +1,7 @@
-package Logic;
+package Controllers;
 
 import Exceptions.RecipientNotFoundException;
+import Utils.Cipher;
 
 import java.util.ArrayList;
 import java.util.List;

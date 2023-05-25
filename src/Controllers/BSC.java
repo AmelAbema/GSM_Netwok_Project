@@ -1,6 +1,4 @@
-package Logic;
-
-import Exceptions.RecipientNotFoundException;
+package Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +35,7 @@ public class BSC extends Thread {
     }
 
     public void passSMS(byte[][] arr) {
-        try {
-            BTS.passSMS(arr);
-        } catch (RecipientNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        VRD.receiveSMS(arr);
     }
 
 
