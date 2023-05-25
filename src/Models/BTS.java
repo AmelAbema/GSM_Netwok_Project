@@ -46,9 +46,13 @@ public class BTS extends Thread {
                 arr = smsQueue.get(0);
                 smsQueue.remove(0);
             }
+            if (arr[2][0] == (byte) 0){
+                int bscIndex = getBSCWithLeastSMS();
+                bscList.get(bscIndex).storeSMS(arr);
+            } else {
+                VRD.receiveSMS(arr);
+            }
 
-            int bscIndex = getBSCWithLeastSMS();
-            bscList.get(bscIndex).passSMS(arr);
         }
     }
 

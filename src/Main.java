@@ -3,6 +3,9 @@ import Models.BTS;
 import Models.VBD;
 import Views.MainFrame;
 
+import java.io.File;
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
@@ -30,9 +33,17 @@ public class Main {
         vbdObject3.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            vbdObject1.saveVBDInfo();
-            vbdObject2.saveVBDInfo();
-            vbdObject3.saveVBDInfo();
+            File file = new File("C:\\Programming\\MyProjects\\GSM_Netwok_Project\\src\\info.bin");
+            if (!file.exists()) {
+                try {
+                    if (!file.createNewFile()) System.out.println("Cannot create a file");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            vbdObject1.saveVBDInfo(file);
+            vbdObject2.saveVBDInfo(file);
+            vbdObject3.saveVBDInfo(file);
         }));
 
 

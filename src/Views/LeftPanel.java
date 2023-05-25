@@ -37,6 +37,9 @@ public class LeftPanel extends JPanel {
     }
 
     private void createSendingDevice(String message) {
+        if (vbdController != null){
+            vbdController.createStartVBD();
+        }
         JPanel devicePanel = new JPanel();
         devicePanel.setLayout(new FlowLayout());
 

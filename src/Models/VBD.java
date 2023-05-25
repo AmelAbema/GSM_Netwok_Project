@@ -18,9 +18,9 @@ public class VBD extends Thread {
     }
 
     @Override
-    public void run() {
-        int recipient = new Random().nextInt(VRD.numVRDElements());
-        byte[][] arr = {message.getBytes(StandardCharsets.UTF_8), Cipher.intToBytes(recipient)};
+    public void run() {                                                                         //0 - false (next layer)
+        int recipient = new Random().nextInt(VRD.numVRDElements());                             //1 - true (go out)
+        byte[][] arr = {message.getBytes(StandardCharsets.UTF_8), Cipher.intToBytes(recipient), new byte[]{(byte) 0}};
         try {
             BTS.passSMS(arr);
             sentMessageCount++;
@@ -28,23 +28,16 @@ public class VBD extends Thread {
             System.out.println(e.getMessage());
         }
     }
-    public void saveVBDInfo() {
+    public void saveVBDInfo(File file) {
         try {
-            File file = new File("C:\\Programming\\MyProjects\\GSM_Netwok_Project\\src\\vbd_info.bin");
-            if (!file.exists()) {
-                if (!file.createNewFile()) System.out.println("Cannot create a file");
-            }
             DataOutputStream dos = new DataOutputStream(new FileOutputStream(file));
             dos.write(Cipher.intToBytes(sentMessageCount));
             dos.write(message.getBytes(StandardCharsets.UTF_8));
             dos.write('\n');
+            dos.close();
             System.out.println("VBD information saved to file.");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public String getMessage() {
-        return message;
     }
 }

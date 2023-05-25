@@ -1,5 +1,7 @@
 package Models;
 
+import Exceptions.RecipientNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,16 +31,16 @@ public class BSC extends Thread {
                 arr = smsQueue.get(0);
                 smsQueue.remove(0);
             }
-
-            passSMS(arr);
+            if (arr[2][0] == (byte) 0){
+                arr[2][0] = (byte) 1;
+                try {
+                    BTS.passSMS(arr);
+                } catch (RecipientNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
-
-    public void passSMS(byte[][] arr) {
-        VRD.receiveSMS(arr);
-    }
-
-
     public int getSMSCount() {
         return smsQueue.size();
     }
