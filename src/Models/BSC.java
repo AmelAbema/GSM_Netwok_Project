@@ -2,10 +2,11 @@ package Models;
 
 import Exceptions.RecipientNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BSC extends Thread {
+    private boolean STATUS = true;
+
     private final List<byte[][]> smsQueue = new ArrayList<>();
 
     public void storeSMS(byte[][] arr) {
@@ -16,7 +17,7 @@ public class BSC extends Thread {
     }
 
     public void run() {
-        while (true) {
+        while (STATUS) {
             byte[][] arr;
 
             synchronized (smsQueue) {
@@ -31,17 +32,30 @@ public class BSC extends Thread {
                 arr = smsQueue.get(0);
                 smsQueue.remove(0);
             }
-            if (arr[2][0] == (byte) 0){
-                arr[2][0] = (byte) 1;
+
+            if (Arrays.equals(arr[2], new byte[]{(byte) 0})){
+                arr[2] = new byte[]{(byte) 1};
                 try {
+                    int timer = new Random().nextInt(11) + 5;
+                    sleep(timer * 1000);
+                    System.out.println(timer + " sec");
                     BTS.passSMS(arr);
-                } catch (RecipientNotFoundException e) {
+                } catch (RecipientNotFoundException | InterruptedException e ) {
                     throw new RuntimeException(e);
                 }
             }
         }
+
     }
+
     public int getSMSCount() {
         return smsQueue.size();
+    }
+    public boolean isSTATUS() {
+        return STATUS;
+    }
+
+    public void setSTATUS(boolean STATUS) {
+        this.STATUS = STATUS;
     }
 }

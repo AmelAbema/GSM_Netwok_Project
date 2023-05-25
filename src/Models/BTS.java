@@ -3,8 +3,7 @@ package Models;
 import Exceptions.RecipientNotFoundException;
 import Utils.Cipher;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BTS extends Thread {
     private static final List<byte[][]> smsQueue = new ArrayList<>();
@@ -46,12 +45,22 @@ public class BTS extends Thread {
                 arr = smsQueue.get(0);
                 smsQueue.remove(0);
             }
-            if (arr[2][0] == (byte) 0){
-                int bscIndex = getBSCWithLeastSMS();
-                bscList.get(bscIndex).storeSMS(arr);
-            } else {
-                VRD.receiveSMS(arr);
+
+            try {
+                sleep(3000);
+                System.out.println("3 sec");
+                if (Arrays.equals(arr[2], new byte[]{(byte) 0})) {
+                    int bscIndex = getBSCWithLeastSMS();
+                    bscList.get(bscIndex).storeSMS(arr);
+                } else {
+                    VRD.receiveSMS(arr);
+                }
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
+
+
 
         }
     }
