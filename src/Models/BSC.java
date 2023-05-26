@@ -4,15 +4,17 @@ import Exceptions.RecipientNotFoundException;
 
 import java.util.*;
 
+import static Models.BTS.bscList;
+
 public class BSC extends Thread {
 
-    public static List<BSC> bscList = new ArrayList<>();
 
     public BSC() {
         bscList.add(this);
     }
 
     private final List<byte[][]> smsQueue = new ArrayList<>();
+
 
     public void storeSMS(byte[][] arr) {
         synchronized (smsQueue) {
@@ -38,6 +40,7 @@ public class BSC extends Thread {
                 smsQueue.remove(0);
             }
 
+            assert arr != null;
             if (Arrays.equals(arr[1], new byte[]{(byte) 0})){
                 arr[1] = new byte[]{(byte) 1};
                 try {

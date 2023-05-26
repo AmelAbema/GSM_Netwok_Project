@@ -7,7 +7,7 @@ import java.util.*;
 
 public class BTS extends Thread {
     private static final List<byte[][]> smsQueue = new ArrayList<>();
-    private static final List<BSC> bscList = new ArrayList<>();
+    public static final List<BSC> bscList = new ArrayList<>();
 
     public static void addBSC(BSC bsc) {
         bscList.add(bsc);

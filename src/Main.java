@@ -26,14 +26,10 @@ public class Main {
         BTS bts = new BTS();
         bts.start();
 
-        // Create BSC controllers and start their threads
-        BSC bsc1 = new BSC();
-        BSC bsc2 = new BSC();
-        bsc1.start();
-        bsc2.start();
+
 
         // Add BSCs to BTS
-        for (BSC bsc : BSC.bscList){
+        for (BSC bsc : BTS.bscList){
             BTS.addBSC(bsc);
         }
 
@@ -68,7 +64,7 @@ public class Main {
             for (VBD vbd : VBD.vbdList) {
                 vbd.join();
             }
-            for (BSC bsc : BSC.bscList){
+            for (BSC bsc : BTS.bscList){
                 bsc.join();
             }
             bts.join();

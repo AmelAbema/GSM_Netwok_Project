@@ -1,5 +1,8 @@
 package Views;
 
+import Models.BSC;
+import Models.BTS;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,12 +22,8 @@ public class MiddlePanel extends JPanel {
         JButton addStationButton = new JButton("Add");
         addStationButton.addActionListener(e -> createStationDevice());
 
-        JButton removeStationButton = new JButton("Remove BSC");
-        removeStationButton.addActionListener(e -> removeStationDevice());
-
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.add(addStationButton);
-        buttonPanel.add(removeStationButton);
 
         add(stationsScrollPane, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -33,6 +32,10 @@ public class MiddlePanel extends JPanel {
     }
 
     private void createStationDevice() {
+
+        BSC bscObject = new BSC();
+        BTS.addBSC(bscObject);
+        bscObject.start();
         JPanel stationPanel = new JPanel();
         stationPanel.setLayout(new FlowLayout());
 
