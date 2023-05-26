@@ -27,7 +27,7 @@ public class VBD extends Thread {
 
     @Override
     public void run() {
-
+        while (true) {
             int recipient = new Random().nextInt(VRD.numVRDElements());
             byte[][] arr = {PduEncoderDecoder.encoder(String.valueOf(recipient), message), new byte[]{(byte) 0}};
             try {
@@ -38,7 +38,7 @@ public class VBD extends Thread {
             } catch (RecipientNotFoundException e) {
                 System.out.println(e.getMessage());
             }
-
+        }
     }
 
     public void saveVBDInfo(DataOutputStream dos) {
