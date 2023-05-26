@@ -49,7 +49,7 @@ public class BTS extends Thread {
             try {
                 sleep(3000);
                 System.out.println("3 sec");
-                if (Arrays.equals(arr[2], new byte[]{(byte) 0})) {
+                if (Arrays.equals(arr[1], new byte[]{(byte) 0})) {
                     int bscIndex = getBSCWithLeastSMS();
                     bscList.get(bscIndex).storeSMS(arr);
                 } else {

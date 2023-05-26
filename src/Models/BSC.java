@@ -33,8 +33,8 @@ public class BSC extends Thread {
                 smsQueue.remove(0);
             }
 
-            if (Arrays.equals(arr[2], new byte[]{(byte) 0})){
-                arr[2] = new byte[]{(byte) 1};
+            if (Arrays.equals(arr[1], new byte[]{(byte) 0})){
+                arr[1] = new byte[]{(byte) 1};
                 try {
                     int timer = new Random().nextInt(11) + 5;
                     sleep(timer * 1000);

@@ -23,7 +23,7 @@ public class VBD extends Thread {
     @Override
     public void run() {                                                                         //0 - false (next layer)
         int recipient = new Random().nextInt(VRD.numVRDElements());                             //1 - true (go out)
-        byte[][] arr = {PduEncoderDecoder.encoder(message, String.valueOf(recipient)), new byte[]{(byte) 0}};
+        byte[][] arr = {PduEncoderDecoder.encoder(String.valueOf(recipient), message), new byte[]{(byte) 0}};
         try {
             BTS.passSMS(arr);
             sentMessageCount++;

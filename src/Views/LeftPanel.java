@@ -1,11 +1,16 @@
 package Views;
 
 import Controllers.VBDController;
+import Models.VBD;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class LeftPanel extends JPanel {
+    static Set<String> generatedNumbers = new HashSet<>();
     private VBDController vbdController;
     private final JPanel sendingDevicesPanel;
     private int deviceCounter = 1;
@@ -37,9 +42,10 @@ public class LeftPanel extends JPanel {
     }
 
     private void createSendingDevice(String message) {
-        if (vbdController != null){
-            vbdController.createStartVBD();
-        }
+        String num = generateRandomPhoneNumber();
+//        VBD vbdObject = new VBD(num, message);
+//        vbdObject.start();
+
         JPanel devicePanel = new JPanel();
         devicePanel.setLayout(new FlowLayout());
 
@@ -54,7 +60,7 @@ public class LeftPanel extends JPanel {
         frequencySlider.setPaintLabels(true);
 
         JButton terminateButton = new JButton("Terminate");
-        JTextField deviceNumberField = new JTextField("Device " + deviceCounter);
+        JTextField deviceNumberField = new JTextField(num);
         deviceNumberField.setEditable(false);
 
         JComboBox<String> stateComboBox = new JComboBox<>(new String[]{"WAITING", "ACTIVE"});
@@ -93,5 +99,23 @@ public class LeftPanel extends JPanel {
         sendingDevicesPanel.revalidate();
 
         deviceCounter++;
+    }
+
+    public static String generateRandomPhoneNumber() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append('+');
+
+        for (int i = 0; i < random.nextInt(4) + 9; i++) {
+            sb.append(random.nextInt(10));
+        }
+
+        generatedNumbers.add(sb.toString());
+
+        if (!generatedNumbers.contains(sb.toString())) {
+            return generateRandomPhoneNumber();
+        }
+        return sb.toString();
     }
 }
