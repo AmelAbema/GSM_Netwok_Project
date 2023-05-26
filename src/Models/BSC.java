@@ -5,7 +5,12 @@ import Exceptions.RecipientNotFoundException;
 import java.util.*;
 
 public class BSC extends Thread {
-    private boolean STATUS = true;
+
+    public static List<BSC> bscList = new ArrayList<>();
+
+    public BSC() {
+        bscList.add(this);
+    }
 
     private final List<byte[][]> smsQueue = new ArrayList<>();
 
@@ -17,7 +22,7 @@ public class BSC extends Thread {
     }
 
     public void run() {
-        while (STATUS) {
+        while (true) {
             byte[][] arr;
 
             synchronized (smsQueue) {
@@ -50,12 +55,5 @@ public class BSC extends Thread {
 
     public int getSMSCount() {
         return smsQueue.size();
-    }
-    public boolean isSTATUS() {
-        return STATUS;
-    }
-
-    public void setSTATUS(boolean STATUS) {
-        this.STATUS = STATUS;
     }
 }

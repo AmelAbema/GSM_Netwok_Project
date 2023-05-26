@@ -12,13 +12,13 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        String phoneNumber = "+48576370264";
-        String message = "Hello, World!";
-        byte[] pdu = PduEncoderDecoder.encoder(phoneNumber, message);
-        System.out.println("PDU: " + Arrays.toString(pdu));
-
-        String[] decodedMessage = PduEncoderDecoder.decoder(pdu);
-        System.out.println("Decoded message: \n" + Arrays.toString(decodedMessage));
+//        String phoneNumber = "+48576370264";
+//        String message = "Hello, World!";
+//        byte[] pdu = PduEncoderDecoder.encoder(phoneNumber, message);
+//        System.out.println("PDU: " + Arrays.toString(pdu));
+//
+//        String[] decodedMessage = PduEncoderDecoder.decoder(pdu);
+//        System.out.println("Decoded message: \n" + Arrays.toString(decodedMessage));
 
         new MainFrame();
 
@@ -33,16 +33,9 @@ public class Main {
         bsc2.start();
 
         // Add BSCs to BTS
-        BTS.addBSC(bsc1);
-        BTS.addBSC(bsc2);
-
-        // Create VBD objects and start their threads
-//        VBD vbdObject1 = new VBD("234234234","Hello, VRD!");
-//        VBD vbdObject2 = new VBD("234234234", "Greetings from VBD!");
-//        VBD vbdObject3 = new VBD("234234234", "Sending an SMS message");
-//        vbdObject1.start();
-//        vbdObject2.start();
-//        vbdObject3.start();
+        for (BSC bsc : BSC.bscList){
+            BTS.addBSC(bsc);
+        }
 
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -57,9 +50,9 @@ public class Main {
                 FileOutputStream fos = new FileOutputStream(file, true);  // Open file in append mode
                 DataOutputStream dos = new DataOutputStream(fos);
 
-//                vbdObject1.saveVBDInfo(dos);
-//                vbdObject2.saveVBDInfo(dos);
-//                vbdObject3.saveVBDInfo(dos);
+                for (VBD vbd : VBD.vbdList) {
+                    vbd.saveVBDInfo(dos);
+                }
                 System.out.println("All VBD information saved to file.");
                 dos.close();
 
@@ -72,11 +65,12 @@ public class Main {
 
         // Wait for the threads to finish
         try {
-//            vbdObject1.join();
-//            vbdObject2.join();
-//            vbdObject3.join();
-            bsc1.join();
-            bsc2.join();
+            for (VBD vbd : VBD.vbdList) {
+                vbd.join();
+            }
+            for (BSC bsc : BSC.bscList){
+                bsc.join();
+            }
             bts.join();
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -43,8 +43,8 @@ public class LeftPanel extends JPanel {
 
     private void createSendingDevice(String message) {
         String num = generateRandomPhoneNumber();
-//        VBD vbdObject = new VBD(num, message);
-//        vbdObject.start();
+        VBD vbdObject = new VBD(num, message);
+
 
         JPanel devicePanel = new JPanel();
         devicePanel.setLayout(new FlowLayout());
@@ -52,7 +52,7 @@ public class LeftPanel extends JPanel {
         JTextField messageLabel = new JTextField(message);
         messageLabel.setEditable(false);
 
-        JSlider frequencySlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 5);
+        JSlider frequencySlider = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
         frequencySlider.setSnapToTicks(true);
         frequencySlider.createStandardLabels(1, 1);
         frequencySlider.setMajorTickSpacing(1);
@@ -71,9 +71,11 @@ public class LeftPanel extends JPanel {
             if (selectedState.equals("ACTIVE")) {
                 // Start or resume the thread
                 // Implement the logic to handle the thread's behavior
+
             } else if (selectedState.equals("WAITING")) {
                 // Suspend or pause the thread
                 // Implement the logic to handle the thread's behavior
+
             }
         });
 
@@ -81,12 +83,14 @@ public class LeftPanel extends JPanel {
             sendingDevicesPanel.remove(devicePanel);
             sendingDevicesPanel.revalidate();
             sendingDevicesPanel.repaint();
+            vbdObject.interrupt();
         });
 
         frequencySlider.addChangeListener(e -> {
             int frequency = frequencySlider.getValue();
             // Perform action based on the selected frequency
             // For example, update the frequency value for
+            vbdObject.setFrequency(frequency);
         });
 
         devicePanel.add(deviceNumberField);
@@ -99,6 +103,7 @@ public class LeftPanel extends JPanel {
         sendingDevicesPanel.revalidate();
 
         deviceCounter++;
+        vbdObject.start();
     }
 
     public static String generateRandomPhoneNumber() {
